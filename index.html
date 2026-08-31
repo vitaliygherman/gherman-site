@@ -1728,7 +1728,19 @@
     hint.innerHTML = open ? `Показати ще ${n} ексклюзив${n > 1 ? 'и' : ''} ↓` : 'Згорнути ↑';
   }
 
-  loadExclusives();
+  // ВАЖЛИВО: не викликаємо loadExclusives() одразу тут — у момент парсингу
+  // цього <script> сторінка (5+ МБ HTML, десятки фото) ще сама завантажується,
+  // і на реальних телефонах перший fetch стабільно не встигає/губиться в
+  // цій тисняві, хоча та сама функція, викликана вручну ПІСЛЯ завантаження,
+  // завжди спрацьовує без жодної помилки (перевірено напряму в консолі).
+  // Тому чекаємо повного window.load (і про всяк випадок ще й
+  // DOMContentLoaded як запасний варіант, якщо load вже минув).
+  function startExclusivesLoad(){ loadExclusives(); }
+  if (document.readyState === 'complete') {
+    setTimeout(startExclusivesLoad, 0);
+  } else {
+    window.addEventListener('load', startExclusivesLoad, { once: true });
+  }
 </script>
 
 <section style="padding:0 20px;">
