@@ -1700,7 +1700,7 @@
           bucket: 'object-photos',
           catLabel: 'exclusive',
           dealTag: '★ Ексклюзив',
-          onClick: `openExclusiveModal(${idx})`
+          onClick: `openExclusiveModal(${idx}, '${(o.id || '').toString().replace(/'/g, "\\'")}')`
         })}${countBadge}</div>`;
       };
       const main = items[0];
@@ -3991,8 +3991,11 @@
   // Клік по картці ексклюзиву — відкриває ту саму модалку, що й у каталозі
   // (гортання фото свайпом/стрілками, лічильник "1/N"), але з чистим описом без зірочок
   // з CRM, замість автозгенерованого маркетингового тексту (він не для ексклюзивів).
-  function openExclusiveModal(i){
-    const obj = (window.exclusivesCache || [])[i];
+  function openExclusiveModal(i, fallbackId){
+    let obj = (window.exclusivesCache || [])[i];
+    if (!obj && fallbackId) {
+      obj = (window.exclusivesCache || []).find(o => String(o.id) === String(fallbackId));
+    }
     if (!obj) return;
     window._modalObj = obj;
     if (obj.id && typeof syncURL === 'function') {
