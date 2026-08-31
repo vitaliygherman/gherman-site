@@ -112,6 +112,12 @@ export default async (request, context) => {
 
     const headers = new Headers(response.headers);
     headers.delete('content-length');
+    // Кожне посилання (?obj=X чи ?excl=Y) має віддавати СВІЖУ сторінку з
+    // правильним фото/ціною саме під той ID. Без цього CDN Netlify може
+    // закешувати відповідь за шляхом "/" і роздавати її під різні query-
+    // параметри, ігноруючи, що там насправді інший об'єкт.
+    headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    headers.delete('etag');
     return new Response(html, { status: response.status, headers });
   } catch (e) {
     return response;
