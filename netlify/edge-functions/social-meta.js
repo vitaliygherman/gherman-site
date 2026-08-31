@@ -66,7 +66,7 @@ export default async (request, context) => {
       if (Array.isArray(data) && data.length) obj = data[0];
     } else if (exclId) {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/manual_listings?select=*&id=eq.${encodeURIComponent(exclId)}&listing_type=eq.exclusive`,
+        `${SUPABASE_URL}/rest/v1/manual_listings?select=*&id=eq.${encodeURIComponent(exclId)}&listing_type=eq.exclusive&active=eq.true`,
         { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       const data = await res.json();
@@ -85,14 +85,20 @@ export default async (request, context) => {
 
     const photos = (obj.photos || '').split(',').map(p => photoUrl(p, 'object-photos')).filter(Boolean);
     const image = photos[0] || (url.origin + '/og-cover.jpg');
-    const cat = CAT_LABEL[(obj.obj_cat || '').split(',')[0]] || "Об'єкт";
+    const isExclusive = !!exclId;
+    const cat = isExclusive ? 'Ексклюзив' : (CAT_LABEL[(obj.obj_cat || '').split(',')[0]] || "Об'єкт");
     const price = obj.price
       ? Number(obj.price).toLocaleString('uk-UA') + currencySymbol(obj)
       : 'Ціна за запитом';
     const roomsPart = obj.rooms ? `${obj.rooms}-кімнатна ` : '';
     const district = obj.district || 'Чернівці';
     const title = `${roomsPart}${cat} — ${price} · ${district} | GHERMAN`;
-    const desc = `${obj.street ? 'вул. ' + obj.street + '. ' : ''}Фото, ціна та деталі об'єкта — на сайті агенції GHERMAN.`;
+    // manual_listings (exclusives) has no street/obj_cat columns — use its own
+    // description text instead; public_site_objects (обj) still uses street.
+    const descSource = isExclusive
+      ? (obj.description || '').replace(/\s+/g, ' ').trim().slice(0, 140)
+      : (obj.street ? 'вул. ' + obj.street + '.' : '');
+    const desc = `${descSource ? descSource + ' ' : ''}Фото, ціна та деталі об'єкта — на сайті агенції GHERMAN.`;
     const pageUrl = url.href;
 
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>`);
