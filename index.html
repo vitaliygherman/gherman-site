@@ -3458,6 +3458,7 @@
   // про який саме об'єкт йдеться, і могла записати це в CRM (як і в каталозі) ====
   window._leadContext = [];
   function registerLeadContext(obj){
+    window._leadContext = window._leadContext || [];
     const idx = window._leadContext.length;
     window._leadContext.push({
       id: obj.id || '', category: (obj.obj_cat || '').split(',')[0] || 'flat',
