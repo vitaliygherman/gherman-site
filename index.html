@@ -1663,14 +1663,11 @@
     if (!container) return;
     try {
       let items = [];
-      try {
-        items = await fetchExclusivesOnce();
-      } catch(e) { items = []; }
-      // Якщо перша спроба не дала результату (обірваний запит через слабкий
-      // зв'язок тощо) — пробуємо ще раз через невелику паузу, перш ніж
-      // здаватися і показувати запасний варіант.
-      if (!items.length) {
-        await new Promise(r => setTimeout(r, 1200));
+      // Пробуємо до 4 разів з паузами, що збільшуються — щоб пережити
+      // повільний чи нестабільний зв'язок, а не здаватися після 1 спроби.
+      const delays = [0, 1000, 2000, 3000];
+      for (let attempt = 0; attempt < delays.length && !items.length; attempt++) {
+        if (delays[attempt]) await new Promise(r => setTimeout(r, delays[attempt]));
         try {
           items = await fetchExclusivesOnce();
         } catch(e) { items = []; }
