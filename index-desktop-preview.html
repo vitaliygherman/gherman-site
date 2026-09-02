@@ -6,7 +6,11 @@
   // одразу перекидаємо на мобільну версію (index.html), поки нічого ще не
   // намалювалось на екрані, щоб не було "блимання" некрасивою версією.
   (function(){
-    if (window.innerWidth < 900) {
+    // Комп'ютер = широкий екран БЕЗ сенсорного вводу. Якщо є тач (навіть на
+    // широкому екрані — наприклад, планшет альбомно) — це не 'справжній'
+    // комп'ютер, тому такий пристрій теж лишаємо на мобільній версії.
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (window.innerWidth < 900 || isTouchDevice) {
       window.location.replace('/index.html');
     }
   })();
