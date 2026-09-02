@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
+<script>
+  // "Воротар": якщо на цю (мобільну) сторінку випадково зайшли з комп'ютера —
+  // одразу перекидаємо на десктопну версію (index-desktop-preview.html), поки
+  // нічого ще не намалювалось на екрані, щоб не було "блимання" мобільною версією.
+  (function(){
+    if (window.innerWidth >= 900) {
+      window.location.replace('/index-desktop-preview.html');
+    }
+  })();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>GHERMAN — Агенція нерухомості в Чернівцях | Квартири, будинки, земля, новобудови</title>
@@ -3264,7 +3274,9 @@
     let html = cardsHtml.join('');
     if (totalPages > 1) {
       html += '<div class="acc-pager">' + Array.from({ length: totalPages }, (_, i) => i + 1).map(p =>
-        `<button class="acc-page-btn${p === page ? ' active' : ''}" onclick="renderAccordionPage('${cache}', ${p}); document.getElementById('${cfg.containerId}').scrollIntoView({behavior:'smooth', block:'start'});">${p}</button>`
+        // Клік по номеру сторінки — миттєво (без плавної анімації "мотання") показує
+        // верх списку, а не повільно прокручує туди
+        `<button class="acc-page-btn${p === page ? ' active' : ''}" onclick="renderAccordionPage('${cache}', ${p}); document.getElementById('${cfg.containerId}').scrollIntoView({behavior:'auto', block:'start'});">${p}</button>`
       ).join('') + '</div>';
     }
     container.innerHTML = html || '<p style="text-align:center; padding:20px; color:var(--gray);">Немає об\'єктів.</p>';
