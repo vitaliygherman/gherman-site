@@ -6,7 +6,11 @@
   // одразу перекидаємо на десктопну версію (index-desktop-preview.html), поки
   // нічого ще не намалювалось на екрані, щоб не було "блимання" мобільною версією.
   (function(){
-    if (window.innerWidth >= 900) {
+    // Додаткова перевірка на сенсорний екран — щоб телефон НІКОЛИ не потрапив
+    // на комп'ютерну версію, навіть якщо з якоїсь причини ширина екрана
+    // повідомляється браузером неправильно (буває на деяких iPhone).
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (window.innerWidth >= 900 && !isTouchDevice) {
       window.location.replace('/index-desktop-preview.html');
     }
   })();
