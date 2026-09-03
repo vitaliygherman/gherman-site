@@ -3861,7 +3861,7 @@
 
     // ---- речення 2: факти (площа, поверх, стан, газ) ----
     const factBits = [];
-    if (area) factBits.push(`площа ${area} м²`);
+    if (area) factBits.push(`площа ${area} ${cat === 'land' ? 'соток' : 'м²'}`);
     if (floor) factBits.push(`${floor}${totalFloors ? ' з '+totalFloors : ''} поверх`);
     if (cond) factBits.push(cond);
     if (cat === 'house' && gas) factBits.push(gas === 'є газ' ? 'власне газове опалення' : 'без газового опалення');
@@ -3919,7 +3919,7 @@
     const clickAttr = opts.onClick ? ` onclick="${opts.onClick}" style="cursor:pointer;"` : '';
     const isFav = getFavorites().has(String(obj.id));
     const facts = [
-      area  ? `<span class="cp-fact">${CP_ICON_AREA}${area} м²</span>` : '',
+      area  ? `<span class="cp-fact">${CP_ICON_AREA}${area} ${catKey === 'land' ? 'соток' : 'м²'}</span>` : '',
       obj.rooms ? `<span class="cp-fact">${CP_ICON_BED}${obj.rooms}</span>` : '',
       floor ? `<span class="cp-fact">${CP_ICON_FLOOR}${floor}${totalFloors ? '/' + totalFloors : ''}</span>` : ''
     ].filter(Boolean).join('');
@@ -4086,7 +4086,7 @@
     const floor = obj.floor || '';
     const totalFloors = obj.floor_total || obj.total_floors || obj.floors || '';
     const facts = [
-      area  ? `<span class="cp-fact">${CP_ICON_AREA}${area} м²</span>` : '',
+      area  ? `<span class="cp-fact">${CP_ICON_AREA}${area} ${resolvedCat === 'land' ? 'соток' : 'м²'}</span>` : '',
       obj.rooms ? `<span class="cp-fact">${CP_ICON_BED}${obj.rooms}</span>` : '',
       floor ? `<span class="cp-fact">${CP_ICON_FLOOR}${floor}${totalFloors ? '/' + totalFloors : ''}</span>` : ''
     ].filter(Boolean).join('');
@@ -4496,6 +4496,7 @@
   function renderAccordionDetails(obj, uid, cache, idx, bucket){
     const price = obj.price ? Number(obj.price).toLocaleString('uk-UA') + currencySymbol(obj) : 'Ціна за запитом';
     const area = obj.area || obj.total_area || obj.square || '';
+    const _accCat = (obj.obj_cat || '').split(',')[0];
     const floor = obj.floor || '';
     const totalFloors = obj.floor_total || obj.total_floors || obj.floors || '';
     const houseType = (obj.house_type && obj.house_type.toLowerCase() !== 'any') ? obj.house_type : '';
@@ -4522,7 +4523,7 @@
       </div>` : '';
     // Іконковий рядок — той самий стиль, що на закритій картці (площа/кімнати/поверх)
     const iconFacts = [
-      area  ? `<span class="cp-fact">${CP_ICON_AREA}${area} м²</span>` : '',
+      area  ? `<span class="cp-fact">${CP_ICON_AREA}${area} ${_accCat === 'land' ? 'соток' : 'м²'}</span>` : '',
       obj.rooms ? `<span class="cp-fact">${CP_ICON_BED}${obj.rooms}</span>` : '',
       floor ? `<span class="cp-fact">${CP_ICON_FLOOR}${floor}${totalFloors ? '/' + totalFloors : ''}</span>` : ''
     ].filter(Boolean).join('');
@@ -4725,7 +4726,7 @@
           <span style="display:flex; color:${GOLD};">${svg}</span>${val}
         </div>` : '';
     const facts = [
-      factIcon(CP_ICON_AREA, area ? area + ' м²' : ''),
+      factIcon(CP_ICON_AREA, area ? area + ' ' + (catKey === 'land' ? 'соток' : 'м²') : ''),
       factIcon(CP_ICON_BED, obj.rooms ? obj.rooms + ' кімн.' : ''),
       factIcon(CP_ICON_FLOOR, floor ? floor + (totalFloors ? '/' + totalFloors : '') : '')
     ].filter(Boolean).join('');
@@ -5649,7 +5650,7 @@
         const parts = [
           obj.district || '',
           obj.rooms ? obj.rooms + ' кімн.' : '',
-          area ? area + ' м²' : '',
+          area ? area + ' ' + (key === 'land' ? 'соток' : 'м²') : '',
           floor ? 'поверх ' + floor : '',
           (obj.cond && obj.cond.toLowerCase() !== 'any') ? obj.cond : ''
         ].filter(Boolean);
@@ -5839,9 +5840,10 @@
     const photos = (obj.photos || '').split(',').map(p => photoUrl(p)).filter(Boolean);
     const price = obj.price ? Number(obj.price).toLocaleString('uk-UA') + currencySymbol(obj) : 'Ціна за запитом';
     const area = obj.area || obj.total_area || obj.square || '';
+    const _ccCat = (obj.obj_cat || '').split(',')[0];
     const metaParts = [
       obj.rooms ? obj.rooms + ' кімн.' : '',
-      area ? area + ' м²' : '',
+      area ? area + ' ' + (_ccCat === 'land' ? 'соток' : 'м²') : '',
       obj.district || 'Чернівці'
     ].filter(Boolean);
     return { photo: photos[0] || '', price, meta: metaParts.join(' · '), desc: extractDescription(obj) || 'Деталі об\'єкта уточнюйте у менеджера.' };
