@@ -1610,6 +1610,7 @@
     <a onclick="event.preventDefault(); openInfoModal('exclusive');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; border-bottom:1px solid var(--line); color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Ексклюзиви агентства</a>
     <a onclick="event.preventDefault(); openInfoModal('about');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; border-bottom:1px solid var(--line); color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Про компанію</a>
     <a onclick="event.preventDefault(); openInfoModal('faq');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; border-bottom:1px solid var(--line); color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Питання і відповіді</a>
+    <a onclick="event.preventDefault(); openInfoModal('search-guide');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; border-bottom:1px solid var(--line); color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Нерухомість Чернівці</a>
     <a onclick="event.preventDefault(); openInfoModal('director');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; border-bottom:1px solid var(--line); color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Директор</a>
     <a onclick="event.preventDefault(); openInfoModal('insurance');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; border-bottom:1px solid var(--line); color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Страхування ТАС</a>
     <a onclick="event.preventDefault(); openInfoModal('contacts');" href="#" style="display:flex; align-items:center; gap:8px; width:100%; padding:13px 10px; color:var(--ink); font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;"><span style="color:var(--gold); font-size:14px;">›</span> Контакти</a>
@@ -2348,6 +2349,30 @@
               <a href="https://t.me/gherman_site_crm_bot" target="_blank" style="display:inline-block; background:var(--wine); color:#fff; padding:12px 22px; border-radius:999px; font-weight:700; font-size:13.5px; text-decoration:none;">Написати нам у Telegram</a>
             </div>
 
+          </div>
+        </div>
+      `
+    },
+    'search-guide': {
+      title: "",
+      photo: null,
+      bg: "#201b17",
+      body: `
+        <div class="info-modal-banner" style="position:relative; margin:-24px -24px -24px; overflow:hidden; background:#201b17; padding-bottom:24px;">
+          <div style="position:relative; padding:30px 24px 24px; overflow:hidden; background:linear-gradient(165deg, #2b241d 0%, #1a1512 100%);">
+            <div style="position:absolute; inset:0; background:radial-gradient(ellipse at 25% 10%, rgba(201,169,97,0.16) 0%, rgba(32,27,23,0) 60%), repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 42px);"></div>
+            <div style="position:relative;">
+            <div style="width:34px; height:2px; background:var(--gold); margin-bottom:14px; border-radius:2px;"></div>
+            <div style="font-size:10.5px; letter-spacing:2px; font-weight:700; color:var(--gold); text-transform:uppercase; margin-bottom:8px; text-shadow:0 1px 8px rgba(0,0,0,0.5);">GHERMAN — Чернівці</div>
+            <div style="font-family:Georgia,serif; font-size:26px; font-weight:700; color:#fff; line-height:1.22; text-shadow:0 2px 16px rgba(0,0,0,0.55);">Нерухомість Чернівці</div>
+          </div>
+          </div>
+          <div style="position:relative; padding:24px 24px 4px; font-size:14.5px; line-height:1.75; color:#D9D2C6;">
+            <p style="margin:0 0 18px;">Шукаєте нерухомість у Чернівцях, а сайти видають щось не те? Це нормально — люди формулюють запит по-різному, і всі мають рацію.</p>
+            <p style="margin:0 0 18px;">Одні пишуть «нерухомість Чернівці», інші — «недвижимость Черновцы», хтось просто «агентство нерухомості» чи «агентство недвижимости». Є навіть ті, хто пише з помилкою — «агенство» замість «агентство», чи «агенція» замість «агентство». Ми знаходимось однаково добре, якою б мовою чи з якою орфографією ви не шукали.</p>
+            <p style="margin:0 0 18px;">GHERMAN — агенція нерухомості в Чернівцях з 2013 року. Допомагаємо купити, продати чи орендувати квартиру, будинок, земельну ділянку. Перевіряємо документи, супроводжуємо угоду до підпису, знаємо реальні ціни по кожному району — не з оголошень, а із завершених угод.</p>
+            <p style="margin:0;">📞 <a href="tel:+380502205599" style="color:var(--gold); font-weight:700; text-decoration:none;">050 220 55 99</a></p>
+          </div>
           </div>
         </div>
       `
