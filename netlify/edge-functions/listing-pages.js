@@ -130,7 +130,8 @@ export default async (request, context) => {
     const photos = (r.photos || '').split(',').map(p => p.trim()).filter(Boolean);
     const image = photos.length ? photoUrl(photos[0]) : `${SITE}/og-cover.jpg`;
     const roomsWord = (r.rooms && cat === 'flat') ? `${r.rooms}-кімнатну ` : '';
-    const title = `${roomsWord}${label} — ${priceFmt(r.price)} · ${district} | GHERMAN`;
+    const streetPart = r.street ? `, ${r.street}` : '';
+    const title = `${roomsWord}${label} — ${priceFmt(r.price)} · ${district}${streetPart} | GHERMAN`;
     const note = (r.note || '').trim();
     const descSrc = note ? note.slice(0, 150) : `${label} у районі ${district}, Чернівці.`;
     const desc = (descSrc + " Фото, ціна та деталі — на сайті агенції GHERMAN.").slice(0, 300);
@@ -140,7 +141,7 @@ export default async (request, context) => {
     if (r.area) facts.push(`<span class="fact">${esc(r.area)} ${areaUnit(cat)}</span>`);
     if (r.rooms && cat !== 'land') facts.push(`<span class="fact">${esc(r.rooms)} кімн.</span>`);
     if (r.floor) facts.push(`<span class="fact">поверх ${esc(r.floor)}${r.floor_total ? '/' + esc(r.floor_total) : ''}</span>`);
-    if (r.street) facts.push(`<span class="fact">вул. ${esc(r.street)}</span>`);
+    if (r.street) facts.push(`<span class="fact">${esc(r.street)}</span>`);
 
     const html = PAGE_TMPL({
       id, title, desc, canonical, image,
