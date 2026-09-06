@@ -6186,7 +6186,18 @@
     const extra = getExtraFilters();
     // Якщо в "Більше фільтрів" задано свій максимум ціни — він точніший за слайдер бюджету
     const effectiveMaxPrice = extra.maxPriceExtra || window.selectedBudget;
-    const raw = await loadObjects({ category, district: window.selectedDistrict, maxPrice: effectiveMaxPrice, minPrice: extra.minPrice, rooms: getRoomsFilter(), minArea: extra.minArea, maxArea: extra.maxArea, street: extra.street, cond: extra.cond });
+    // "Новобудова" — це не значення поля obj_cat (такого значення там не буває), а
+    // значення поля house_type. Загальний loadObjects() фільтрує саме по obj_cat, тому
+    // для цієї категорії завжди повертав 0 об'єктів на комп'ютерній версії. Тут — той
+    // самий прямий запит по house_type, що вже коректно працює в мобільній версії.
+    let raw;
+    if (category === 'newbuild') {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/public_site_objects?select=*&house_type=ilike.*новобудова*`,
+        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+      raw = res.ok ? await res.json() : [];
+    } else {
+      raw = await loadObjects({ category, district: window.selectedDistrict, maxPrice: effectiveMaxPrice, minPrice: extra.minPrice, rooms: getRoomsFilter(), minArea: extra.minArea, maxArea: extra.maxArea, street: extra.street, cond: extra.cond });
+    }
     const objects = curateObjects(raw);
     window.objectsCache = objects;
     window.lastRawObjects = raw;
