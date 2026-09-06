@@ -129,7 +129,7 @@ export default async (request, context) => {
     const district = (r.district || 'Чернівці').split(',')[0].trim();
     const photos = (r.photos || '').split(',').map(p => p.trim()).filter(Boolean);
     const image = photos.length ? photoUrl(photos[0]) : `${SITE}/og-cover.jpg`;
-    const roomsWord = (r.rooms && cat === 'flat') ? `${r.rooms}-кімнатну ` : '';
+    const roomsWord = (r.rooms && cat === 'flat') ? `${r.rooms}-кімнатна ` : '';
     const streetPart = r.street ? `, ${r.street}` : '';
     const title = `${roomsWord}${label} — ${priceFmt(r.price)} · ${district}${streetPart} | GHERMAN`;
     const note = (r.note || '').trim();
