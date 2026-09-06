@@ -66,8 +66,8 @@ const PAGE_TMPL = (o) => `<!DOCTYPE html>
   header{background:#fff;padding:16px 20px;border-bottom:1px solid #eee;}
   header a{color:var(--wine);text-decoration:none;font-weight:700;font-family:Georgia,serif;font-size:20px;letter-spacing:2px;}
   .wrap{max-width:760px;margin:0 auto;padding:20px;}
-  .photo{width:100%;border-radius:12px;overflow:hidden;margin-bottom:16px;background:#eee;}
-  .photo img{width:100%;display:block;}
+  .photo{width:100%;aspect-ratio:4/3;border-radius:12px;overflow:hidden;margin-bottom:16px;background:#eee;}
+  .photo img{width:100%;height:100%;display:block;object-fit:cover;}
   h1{font-family:Georgia,serif;color:var(--wine);font-size:26px;margin:0 0 6px;}
   .price{font-size:24px;font-weight:700;color:var(--wine);margin:0 0 16px;}
   .facts{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px;}
