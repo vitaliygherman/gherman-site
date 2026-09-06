@@ -1218,7 +1218,7 @@
     <svg width="23" height="17" viewBox="0 0 23 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="1" y1="1.5" x2="22" y2="1.5"/><line x1="1" y1="8.5" x2="22" y2="8.5"/><line x1="1" y1="15.5" x2="22" y2="15.5"/></svg>
   </button>
   <div class="logo" onclick="logoClick()" style="cursor:pointer;">
-    <div class="logo-mark"><span class="mark-letter">G</span><img class="mark-illustration" src="/images/img-bd336387a4.png" alt="GHERMAN"></div>
+    <div class="logo-mark"><span class="mark-letter">G</span><img class="mark-illustration" src="/images/img-bd336387a4.png" alt="GHERMAN" width="220" height="172"></div>
     <div class="logo-text">
       <div class="name">Gherman</div>
       <div class="tagline" id="hero-tagline" style="line-height:1.55;">Ваша агенція нерухомості<br>в Чернівцях</div>
@@ -1279,7 +1279,7 @@
     <div class="heading" id="hero-cat-heading"></div>
     <div class="sub" id="hero-cat-sub">АГЕНТСТВО НЕРУХОМОСТІ GHERMAN</div>
   </div>
-  <img src="/images/img-e545f33607.jpg" alt="Чернівці, вечірня вулиця">
+  <img src="/images/img-e545f33607.jpg" alt="Чернівці, вечірня вулиця" width="1100" height="907">
 </div>
 
 <div class="search-card" id="search-card" style="margin:-40px 16px 20px;">
@@ -1781,7 +1781,7 @@
     <div class="director-photo-single">
       <div style="position:absolute; top:0; left:0; z-index:9; width:0; height:0; border-style:solid; border-width:0 0 46px 46px; border-color:transparent transparent rgba(0,0,0,0.35) transparent;"></div>
       <div style="position:absolute; top:24px; left:-10px; z-index:10; background:linear-gradient(135deg, #86162c 0%, #5c0f1e 100%); color:#fff; font-size:11px; letter-spacing:2.6px; font-weight:700; text-transform:uppercase; padding:10px 24px 10px 28px; box-shadow:0 10px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15); clip-path:polygon(0 0, 100% 0, 90% 100%, 0% 100%); border-bottom:1px solid rgba(201,169,97,0.5);">Директор</div>
-      <img src="/images/img-7dc33e85ee.jpg" alt="Оксана Володимирівна">
+      <img src="/images/img-7dc33e85ee.jpg" alt="Оксана Володимирівна" width="1086" height="1448">
     </div>
     <div class="director-body">
       <div class="rule"></div>
@@ -1800,7 +1800,7 @@
   <div class="eyebrow">Партнерам</div>
   <div class="split-card" style="border-left:none; position:relative; overflow:hidden; padding:24px 22px;">
     <div style="position:absolute; top:-6px; left:-6px; width:230px; height:auto; opacity:0.4; pointer-events:none;">
-      <img src="/images/img-3312f0968b.jpg" alt="" style="display:block; width:100%; height:auto;">
+      <img src="/images/img-3312f0968b.jpg" alt="" width="900" height="984" style="display:block; width:100%; height:auto;">
     </div>
     <div style="position:relative;">
       <h3 style="font-size:22px; line-height:1.25; color:var(--wine); margin:0 0 14px;">Ви можете стати<br>нашим партнером</h3>
@@ -1843,7 +1843,7 @@
 
 <section>
   <div style="position:relative; border-radius:22px; overflow:hidden; box-shadow:0 16px 38px rgba(26,62,122,0.16);">
-    <img src="/images/img-27ec1a1bf0.jpg" alt="Купили квартиру — застрахуйте її" style="display:block; width:100%; height:auto;">
+    <img src="/images/img-27ec1a1bf0.jpg" alt="Купили квартиру — застрахуйте її" width="900" height="1124" style="display:block; width:100%; height:auto;">
     <div style="position:absolute; top:9.3%; left:4.3%; width:23.3%; height:10%; overflow:hidden; border-radius:8px; pointer-events:none;">
       <div style="position:absolute; top:0; left:-60%; width:45%; height:100%; background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0) 100%); transform:skewX(-20deg); animation:logo-shine 3.2s ease-in-out infinite;"></div>
     </div>
@@ -1920,7 +1920,7 @@
 
 <section style="text-align:center;">
   <a onclick="event.preventDefault(); openInfoModal('site');" href="#" style="display:block; border-radius:20px; overflow:hidden; box-shadow:0 14px 32px rgba(15,25,45,0.18); text-decoration:none;">
-    <img src="/images/img-646751c921.jpg" alt="Замовити сайт" style="display:block; width:100%; height:auto;">
+    <img src="/images/img-646751c921.jpg" alt="Замовити сайт" width="900" height="467" style="display:block; width:100%; height:auto;">
   </a>
 </section>
 </div>
@@ -3003,6 +3003,15 @@
   function scheduleVariantsCountUpdate(){
     clearTimeout(variantsCountDebounce);
     variantsCountDebounce = setTimeout(updateVariantsCount, 350);
+  }
+
+  // Рахуємо реальну кількість варіантів одразу при відкритті сайту, а не лише
+  // коли клієнт сам щось змінить у фільтрі — інакше на екрані лишається
+  // цифра "279", вписана в HTML як заглушка, яка ніколи не оновлюється сама.
+  if (document.readyState === 'complete') {
+    setTimeout(updateVariantsCount, 0);
+  } else {
+    window.addEventListener('load', updateVariantsCount, { once: true });
   }
 
   // Безпечне екранування значень, які вставляємо в атрибути HTML (напр. посилання на відео Instagram),
